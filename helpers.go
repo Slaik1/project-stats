@@ -4,7 +4,7 @@ import (
 	"os"
 )
 
-func isDir(path string) bool {
+func IsDir(path string) bool {
 	info, err := os.Stat(path)
 
 	if err != nil {
@@ -14,7 +14,15 @@ func isDir(path string) bool {
 	return info.IsDir()
 }
 
-func getDirFiles(path string) ([]os.DirEntry, error) {
+func GetFileStat(path string) (os.FileInfo, error) {
+	info, err := os.Stat(path)
+	if err != nil {
+		return nil, err
+	}
+	return info, nil
+}
+
+func GetDirFiles(path string) ([]os.DirEntry, error) {
 	entries, err := os.ReadDir(path)
 	if err != nil {
 		return nil, err
@@ -22,7 +30,7 @@ func getDirFiles(path string) ([]os.DirEntry, error) {
 	return entries, nil
 }
 
-func getFileLinesCount(path string) int {
+func GetFileLinesCount(path string) int {
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return 0
